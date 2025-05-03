@@ -1,9 +1,11 @@
 from dataclasses import dataclass
 from enum import Enum
-import re
 from typing import Optional
 
+import re
 
+
+# TODO: Complete the list
 class TokenType(Enum):
     AND = "AND"
     APOS = "APOS"
@@ -54,6 +56,7 @@ class TokenType(Enum):
     PLUS = "PLUS"
     PLUS_EQ = "PLUS_EQ"
     RAISE = "RAISE"
+    RETURN = "RETURN"
     SELF = "SELF"
     STR_LITERAL = "STR_LITERAL"
     WHILE = "WHILE"
@@ -90,7 +93,6 @@ def match_token_type(v: str):
     elif v == "==": return TokenType.EQ_DOUBLE
     elif v == "!": return TokenType.EXCLAMATION
     elif v == "!=": return TokenType.EXCLAMATION_EQ
-    # FLOAT_LITERAL = "FLOAT_LITERAL"
     elif v == "for": return TokenType.FOR
     elif v == "from": return TokenType.FROM
     elif v == ">": return TokenType.GT
@@ -114,10 +116,14 @@ def match_token_type(v: str):
     elif v == "+": return TokenType.PLUS
     elif v == "+=": return TokenType.PLUS_EQ
     elif v == "raise": return TokenType.RAISE
+    elif v == "return": return TokenType.RETURN
     elif v == "self": return TokenType.SELF
-    # STR_LITERAL = "STR_LITERAL"
     elif v == "while": return TokenType.WHILE
     elif v == '\"': return TokenType.QUOT
+
+    # STR_LITERAL is identified on the Lexer level
+    # FLOAT_LITERAL is derived from two INT_LITERAL and one DOT on the Lexer level
+    # Complex operands like MULT_EQ, PLUS_EQ etc. may not get detected upon initial tokenization
 
     if re.search("^(\d|_)+$", v) is not None:
         return TokenType.INT_LITERAL
