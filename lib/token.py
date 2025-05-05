@@ -61,7 +61,15 @@ class TokenType(Enum):
     STR_LITERAL = "STR_LITERAL"
     WHILE = "WHILE"
     QUOT = "QUOT"
-    # TODO: F-string and B-string
+    # TODO: F-string and B-string (f"", b"")
+    # TODO: Hash (comment)
+    # TODO: Docstring (""")
+    # TODO: Decorators (@)
+    # TODO: Binary literals (0b101111, 0B010101)
+    # TODO: Octal literals (0o123)
+    # TODO: Hex literals (0x123)
+    # TODO: Power operator (**)
+
 
 @dataclass
 class Token:
