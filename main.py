@@ -1,6 +1,7 @@
 import sys
 
 from lib.lexer import Lexer
+from lib.parser import Parser
 
 
 def main():
@@ -9,9 +10,10 @@ def main():
         return
 
     file_path = sys.argv[1]
-    lexer = Lexer(file_path)
 
-    lexer.print_tokens()
+    lexer = Lexer(file_path)
+    parser = Parser(lexer.tokens)
+    parser.print_ast()
 
 if __name__ == "__main__":
     main()

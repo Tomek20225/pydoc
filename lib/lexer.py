@@ -25,7 +25,6 @@ class Lexer:
 
         self.read()
         self.tokenize()
-        # TODO: Parse
 
     def read(self):
         print(f"Reading {self.path}...")
@@ -76,6 +75,9 @@ class Lexer:
                     new_tokens.append(new_token)
                     i += 2
                     continue
+
+            # TODO: Ellipsis
+            # TODO: Pow
 
             new_tokens.append(self.tokens[i])
             i += 1
