@@ -13,6 +13,7 @@ class TokenType(Enum):
     ASYNC = "ASYNC"
     BIN_AND = "BIN_AND"
     BIN_OR = "BIN_OR"
+    BREAK = "BREAK"
     CLASS = "CLASS"
     CLOSE_BRACE = "CLOSE_BRACE"
     CLOSE_BRACKET = "CLOSE_BRACKET"
@@ -20,11 +21,13 @@ class TokenType(Enum):
     COLON = "COLON"
     COLON_EQ = "COLON_EQ"
     COMMA = "COMMA"
+    CONTINUE = "CONTINUE"
     DEF = "DEF"
     DIV = "DIV"
     DIV_EQ = "DIV_EQ"
     DOT = "DOT"
     ELIF = "ELIF"
+    ELLIPSIS = "ELLIPSIS"
     ELSE = "ELSE"
     EQ = "EQ"
     EQ_DOUBLE = "EQ_DOUBLE"
@@ -53,6 +56,7 @@ class TokenType(Enum):
     OPEN_BRACKET = "OPEN_BRACKET"
     OPEN_PAREN = "OPEN_PAREN"
     OR = "OR"
+    PASS = "PASS"
     PLUS = "PLUS"
     PLUS_EQ = "PLUS_EQ"
     RAISE = "RAISE"
@@ -84,6 +88,7 @@ def match_token_type(v: str):
     elif v == "async": return TokenType.ASYNC
     elif v == "&": return TokenType.BIN_AND
     elif v == "|": return TokenType.BIN_OR
+    elif v == "break": return TokenType.BREAK
     elif v == "class": return TokenType.CLASS
     elif v == "}": return TokenType.CLOSE_BRACE
     elif v == "]": return TokenType.CLOSE_BRACKET
@@ -91,11 +96,13 @@ def match_token_type(v: str):
     elif v == ":": return TokenType.COLON
     elif v == ":=": return TokenType.COLON_EQ
     elif v == ",": return TokenType.COMMA
+    elif v == "continue": return TokenType.CONTINUE
     elif v == "def": return TokenType.DEF
     elif v == "/": return TokenType.DIV
     elif v == "/=": return TokenType.DIV_EQ
     elif v == ".": return TokenType.DOT
     elif v == "elif": return TokenType.ELIF
+    elif v == "...": return TokenType.ELLIPSIS
     elif v == "else": return TokenType.ELSE
     elif v == "=": return TokenType.EQ
     elif v == "==": return TokenType.EQ_DOUBLE
@@ -121,6 +128,7 @@ def match_token_type(v: str):
     elif v == "[": return TokenType.OPEN_BRACKET
     elif v == "(": return TokenType.OPEN_PAREN
     elif v == "or": return TokenType.OR
+    elif v == "pass": return TokenType.PASS
     elif v == "+": return TokenType.PLUS
     elif v == "+=": return TokenType.PLUS_EQ
     elif v == "raise": return TokenType.RAISE
