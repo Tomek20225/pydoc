@@ -7,6 +7,7 @@ from lib.token import TokenType, Token
 
 
 class AstNodeType(Enum):
+    ASSIGNMENT = 'ASSIGNMENT'
     CLASS = 'CLASS'
     IMPORT = 'IMPORT'
 
@@ -49,6 +50,10 @@ class AstPattern(ABC):
         next_token = self.get_next_token()
         return next_token.type == token_type
 
+    def is_next_token_type_one_of(self, token_types: List[TokenType]) -> bool:
+        next_token = self.get_next_token()
+        return next_token.type in token_types
+
     def get_resulting_node(self) -> AstNode:
         amount = self.cursor + 1
         return AstNode(tokens=self.tokens[0:amount], type=self.type)
@@ -56,6 +61,29 @@ class AstPattern(ABC):
     @abstractmethod
     def match(self) -> Optional[AstNode]:
         pass
+
+
+class AstAssignmentPattern(AstPattern):
+    type = AstNodeType.ASSIGNMENT
+
+    def match(self) -> Optional[AstNode]:
+        if not self.is_next_token_type(TokenType.IDENTIFIER):
+            return None
+        # TODO: Complex type hints, e.g. List[Optional[int]]
+        if self.is_next_token_type(TokenType.COLON):
+            if not self.is_next_token_type(TokenType.IDENTIFIER):
+                return None
+            self.get_next_token()
+        # TODO: Complex operators, e.g. MULT_EQ
+        elif not self.is_current_token_type(TokenType.EQ):
+            return None
+        # TODO: Expressions (make the value be an AstNode?)
+        if self.is_next_token_type_one_of([
+            TokenType.INT_LITERAL, TokenType.FLOAT_LITERAL, TokenType.STR_LITERAL,
+            TokenType.TRUE, TokenType.FALSE, TokenType.NONE, TokenType.IDENTIFIER]
+        ):
+            return self.get_resulting_node()
+        return None
 
 
 class AstClassPattern(AstPattern):
@@ -90,6 +118,7 @@ class AstImportPattern(AstPattern):
         if not self.is_next_token_type(TokenType.IMPORT):
             return None
         # TODO: Multiple comma-separated identifiers
+        # TODO: Parentheses
         if self.is_next_token_type(TokenType.IDENTIFIER):
             return self.get_resulting_node()
         return None
@@ -105,4 +134,4 @@ class AstImportPattern(AstPattern):
 
 
 
-AST_PATTERNS: List[Type[AstPattern]] = [AstImportPattern, AstClassPattern]
+AST_PATTERNS: List[Type[AstPattern]] = [AstAssignmentPattern, AstImportPattern, AstClassPattern]

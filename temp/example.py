@@ -3,7 +3,7 @@ import sys
 
 class   Foo:
     a = None
-    b: int = 2
+    b: int = -2
 
     def __init__(self):
         temp = self.a + 3

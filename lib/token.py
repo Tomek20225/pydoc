@@ -172,7 +172,8 @@ def match_token_type(v: str):
     # FLOAT_LITERAL is derived from two INT_LITERAL and one DOT on the Lexer level
     # Complex operands like MULT_EQ, PLUS_EQ etc. may not get detected upon initial tokenization
 
-    if re.search("^(\d|_)+$", v) is not None:
+    # TODO: Verify if tokenization of negative integers should be done here or on the Lexer level
+    if re.search("^(-|)(\d|_)+$", v) is not None:
         return TokenType.INT_LITERAL
     return TokenType.IDENTIFIER
 
