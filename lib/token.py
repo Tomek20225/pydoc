@@ -10,7 +10,10 @@ class TokenType(Enum):
     AND = "AND"
     APOS = "APOS"
     ARROW = "ARROW"
+    AS = "AS"
+    ASSERT = "ASSERT"
     ASYNC = "ASYNC"
+    AT = "AT"
     BIN_AND = "BIN_AND"
     BIN_OR = "BIN_OR"
     BREAK = "BREAK"
@@ -23,6 +26,7 @@ class TokenType(Enum):
     COMMA = "COMMA"
     CONTINUE = "CONTINUE"
     DEF = "DEF"
+    DEL = "DEL"
     DIV = "DIV"
     DIV_EQ = "DIV_EQ"
     DOT = "DOT"
@@ -31,11 +35,15 @@ class TokenType(Enum):
     ELSE = "ELSE"
     EQ = "EQ"
     EQ_DOUBLE = "EQ_DOUBLE"
+    EXCEPT = "EXCEPT"
     EXCLAMATION = "EXCLAMATION"
     EXCLAMATION_EQ = "EXCLAMATION_EQ"
+    FALSE = "FALSE"
+    FINALLY = "FINALLY"
     FLOAT_LITERAL = "FLOAT_LITERAL"
     FOR = "FOR"
     FROM = "FROM"
+    GLOBAL = "GLOBAL"
     GT = "GT"
     GT_EQ = "GT_EQ"
     IDENTIFIER = "IDENTIFIER"
@@ -52,19 +60,27 @@ class TokenType(Enum):
     MINUS_EQ = "MINUS_EQ"
     MULT = "MULT"
     MULT_EQ = "MULT_EQ"
+    NONE = "NONE"
+    NONLOCAL = "NONLOCAL"
+    NOT = "NOT"
     OPEN_BRACE = "OPEN_BRACE"
     OPEN_BRACKET = "OPEN_BRACKET"
     OPEN_PAREN = "OPEN_PAREN"
     OR = "OR"
     PASS = "PASS"
+    POW = "POW"
     PLUS = "PLUS"
     PLUS_EQ = "PLUS_EQ"
     RAISE = "RAISE"
     RETURN = "RETURN"
     SELF = "SELF"
     STR_LITERAL = "STR_LITERAL"
+    TRUE = "TRUE"
+    TRY = "TRY"
     WHILE = "WHILE"
+    WITH = "WITH"
     QUOT = "QUOT"
+    YIELD = "YIELD"
     # TODO: F-string and B-string (f"", b"")
     # TODO: Hash (comment)
     # TODO: Docstring (""")
@@ -72,7 +88,6 @@ class TokenType(Enum):
     # TODO: Binary literals (0b101111, 0B010101)
     # TODO: Octal literals (0o123)
     # TODO: Hex literals (0x123)
-    # TODO: Power operator (**)
 
 
 @dataclass
@@ -85,7 +100,10 @@ def match_token_type(v: str):
     if v == "and": return TokenType.AND
     elif v == "'": return TokenType.APOS
     elif v == "->": return TokenType.ARROW
+    elif v == 'as': return TokenType.AS
+    elif v == 'assert': return TokenType.ASSERT
     elif v == "async": return TokenType.ASYNC
+    elif v == '@': return TokenType.AT
     elif v == "&": return TokenType.BIN_AND
     elif v == "|": return TokenType.BIN_OR
     elif v == "break": return TokenType.BREAK
@@ -98,6 +116,7 @@ def match_token_type(v: str):
     elif v == ",": return TokenType.COMMA
     elif v == "continue": return TokenType.CONTINUE
     elif v == "def": return TokenType.DEF
+    elif v == 'del': return TokenType.DEL
     elif v == "/": return TokenType.DIV
     elif v == "/=": return TokenType.DIV_EQ
     elif v == ".": return TokenType.DOT
@@ -106,10 +125,14 @@ def match_token_type(v: str):
     elif v == "else": return TokenType.ELSE
     elif v == "=": return TokenType.EQ
     elif v == "==": return TokenType.EQ_DOUBLE
+    elif v == "except": return TokenType.EXCEPT
     elif v == "!": return TokenType.EXCLAMATION
     elif v == "!=": return TokenType.EXCLAMATION_EQ
+    elif v == 'false': return TokenType.FALSE
+    elif v == 'finally': return TokenType.FINALLY
     elif v == "for": return TokenType.FOR
     elif v == "from": return TokenType.FROM
+    elif v == "global": return TokenType.GLOBAL
     elif v == ">": return TokenType.GT
     elif v == ">=": return TokenType.GT_EQ
     elif v == "if": return TokenType.IF
@@ -124,18 +147,26 @@ def match_token_type(v: str):
     elif v == "-=": return TokenType.MINUS_EQ
     elif v == "*": return TokenType.MULT
     elif v == "*=": return TokenType.MULT_EQ
+    elif v == 'None': return TokenType.NONE
+    elif v == 'nonlocal': return TokenType.NONLOCAL
+    elif v == "not": return TokenType.NOT
     elif v == "{": return TokenType.OPEN_BRACE
     elif v == "[": return TokenType.OPEN_BRACKET
     elif v == "(": return TokenType.OPEN_PAREN
     elif v == "or": return TokenType.OR
     elif v == "pass": return TokenType.PASS
+    elif v == "**": return TokenType.POW
     elif v == "+": return TokenType.PLUS
     elif v == "+=": return TokenType.PLUS_EQ
     elif v == "raise": return TokenType.RAISE
     elif v == "return": return TokenType.RETURN
     elif v == "self": return TokenType.SELF
+    elif v == 'True': return TokenType.TRUE
+    elif v == 'try': return TokenType.TRY
     elif v == "while": return TokenType.WHILE
+    elif v == "with": return TokenType.WITH
     elif v == '\"': return TokenType.QUOT
+    elif v == 'yield': return TokenType.YIELD
 
     # STR_LITERAL is identified on the Lexer level
     # FLOAT_LITERAL is derived from two INT_LITERAL and one DOT on the Lexer level

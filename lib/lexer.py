@@ -68,6 +68,8 @@ class Lexer:
             # Complex operators
             if token.type in OPERATOR_TOKENS_WITH_VARIANTS and i + 1 < token_amount:
                 next_token = self.tokens[i + 1]
+
+                # EQ combinations
                 if next_token.type == TokenType.EQ:
                     new_value = f"{token.value}{next_token.value}"
                     new_type = get_eq_token_variant(token.type)
@@ -76,8 +78,21 @@ class Lexer:
                     i += 2
                     continue
 
-            # TODO: Ellipsis
-            # TODO: Pow
+                # POW
+                if token.type == TokenType.MULT and next_token.type == TokenType.MULT:
+                    new_tokens.append(Token(value=token.value * 2, type=TokenType.POW))
+                    i += 2
+                    continue
+
+            # Ellipsis (...)
+            if token.type == TokenType.DOT and i + 2 < token_amount:
+                next_token = self.tokens[i + 1]
+                next_next_token = self.tokens[i + 2]
+                if next_token.type == TokenType.DOT and next_next_token.type == TokenType.DOT:
+                    new_token = Token(value=token.value * 3, type=TokenType.ELLIPSIS)
+                    new_tokens.append(new_token)
+                    i += 3
+                    continue
 
             new_tokens.append(self.tokens[i])
             i += 1
