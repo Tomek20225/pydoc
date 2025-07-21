@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Callable, Any
 import sys
 
 class   Foo:
@@ -18,6 +18,21 @@ class Bar(Foo):
 
 def bar(x: int, y: str) -> List[int]:
     return [x, len(y)]
+
+def func_without_args():
+    pass
+
+def func_with_args(key, pop):
+    pass
+
+def func_with_typed_args(key: str, pop: Callable[[Any], int]):
+    pass
+
+def func_with_typed_args_and_defaults(key: str = 'Default key', pop: Callable[[Any], int] = lambda x: 1):
+    pass
+
+def func_with_defaults(key = "Default key", pop = lambda x: 1):
+    pass
 
 if "__main__" == __name__:
     random_num = bar(

@@ -9,6 +9,7 @@ from lib.token import TokenType, Token
 class AstNodeType(Enum):
     ASSIGNMENT = 'ASSIGNMENT'
     CLASS = 'CLASS'
+    DEF = "DEF"
     IMPORT = 'IMPORT'
 
 
@@ -74,6 +75,7 @@ class AstAssignmentPattern(AstPattern):
             if not self.is_next_token_type(TokenType.IDENTIFIER):
                 return None
             self.get_next_token()
+        # TODO: Declaration only, no assignment
         # TODO: Complex operators, e.g. MULT_EQ
         elif not self.is_current_token_type(TokenType.EQ):
             return None
@@ -111,6 +113,27 @@ class AstClassPattern(AstPattern):
         # TODO: Class methods
 
 
+class AstDefPattern(AstPattern):
+    type = AstNodeType.DEF
+
+    def match(self) -> Optional[AstNode]:
+        if not self.is_next_token_type(TokenType.DEF):
+            return None
+        if not self.is_next_token_type(TokenType.IDENTIFIER):
+            return None
+        if not self.is_next_token_type(TokenType.OPEN_PAREN):
+            return None
+        # TODO: Multiple comma-separated identifiers
+        # TODO: Types of arguments
+        # TODO: Default arguments (assignments)
+        if not self.is_next_token_type(TokenType.CLOSE_PAREN):
+            return None
+        # TODO: Return type
+        if self.is_next_token_type(TokenType.COLON):
+            return self.get_resulting_node()
+        return None
+
+
 class AstImportPattern(AstPattern):
     type = AstNodeType.IMPORT
 
@@ -134,4 +157,4 @@ class AstImportPattern(AstPattern):
 
 
 
-AST_PATTERNS: List[Type[AstPattern]] = [AstAssignmentPattern, AstImportPattern, AstClassPattern]
+AST_PATTERNS: List[Type[AstPattern]] = [AstImportPattern, AstClassPattern, AstDefPattern, AstAssignmentPattern]
