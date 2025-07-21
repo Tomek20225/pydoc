@@ -20,7 +20,7 @@ class TestDef:
         run_parser_test(
             path=CODE_FILE_PATH,
             expected_node=AstNode(type=AstNodeType.DEF, tokens=[
-                Token(type=TokenType.DEF, value='def'),
+                Token(value='def', type=TokenType.DEF),
                 Token(value='func_without_args', type=TokenType.IDENTIFIER),
                 Token(value='(', type=TokenType.OPEN_PAREN),
                 Token(value=')', type=TokenType.CLOSE_PAREN),
@@ -34,7 +34,7 @@ class TestClass:
         run_parser_test(
             path=CODE_FILE_PATH,
             expected_node=AstNode(type=AstNodeType.CLASS, tokens=[
-                Token(type=TokenType.CLASS, value='class'),
+                Token(value='class', type=TokenType.CLASS),
                 Token(value='Foo', type=TokenType.IDENTIFIER),
                 Token(value=':', type=TokenType.COLON)
             ])
@@ -44,7 +44,7 @@ class TestClass:
         run_parser_test(
             path=CODE_FILE_PATH,
             expected_node=AstNode(type=AstNodeType.CLASS, tokens=[
-                Token(type=TokenType.CLASS, value='class'),
+                Token(value='class', type=TokenType.CLASS),
                 Token(value='Bar', type=TokenType.IDENTIFIER),
                 Token(value='(', type=TokenType.OPEN_PAREN),
                 Token(value='Foo', type=TokenType.IDENTIFIER),
