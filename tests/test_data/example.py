@@ -1,6 +1,9 @@
 from typing import List, Callable, Any
 import sys
 
+class SuperException:
+    ...
+
 class   Foo:
     a = None
     b: int = -2
@@ -15,6 +18,9 @@ class   Foo:
 class Bar(Foo):
     def shout(self):
         super().greeting("I'm screaming!")
+
+class Baz(Foo, Bar, SuperException):
+    pass
 
 def bar(x: int, y: str) -> List[int]:
     return [x, len(y)]

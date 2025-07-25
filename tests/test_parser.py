@@ -34,12 +34,13 @@ class TestDef:
 
 
 class TestClass:
-    def test_identifies_class_without_arguments(self, parser_of_code_file: Parser):
+    @pytest.mark.parametrize("class_name", ("SuperException", "Foo"))
+    def test_identifies_class_without_arguments(self, parser_of_code_file: Parser, class_name: str):
         run_parser_test(
             parser=parser_of_code_file,
             expected_node=AstNode(type=AstNodeType.CLASS, tokens=[
                 Token(value='class', type=TokenType.CLASS),
-                Token(value='Foo', type=TokenType.IDENTIFIER),
+                Token(value=class_name, type=TokenType.IDENTIFIER),
                 Token(value=':', type=TokenType.COLON)
             ])
         )
@@ -52,6 +53,23 @@ class TestClass:
                 Token(value='Bar', type=TokenType.IDENTIFIER),
                 Token(value='(', type=TokenType.OPEN_PAREN),
                 Token(value='Foo', type=TokenType.IDENTIFIER),
+                Token(value=')', type=TokenType.CLOSE_PAREN),
+                Token(value=':', type=TokenType.COLON)
+            ])
+        )
+
+    def test_identifies_class_with_multiple_arguments(self, parser_of_code_file: Parser):
+        run_parser_test(
+            parser=parser_of_code_file,
+            expected_node=AstNode(type=AstNodeType.CLASS, tokens=[
+                Token(value='class', type=TokenType.CLASS),
+                Token(value='Baz', type=TokenType.IDENTIFIER),
+                Token(value='(', type=TokenType.OPEN_PAREN),
+                Token(value='Foo', type=TokenType.IDENTIFIER),
+                Token(value=',', type=TokenType.COMMA),
+                Token(value='Bar', type=TokenType.IDENTIFIER),
+                Token(value=',', type=TokenType.COMMA),
+                Token(value='SuperException', type=TokenType.IDENTIFIER),
                 Token(value=')', type=TokenType.CLOSE_PAREN),
                 Token(value=':', type=TokenType.COLON)
             ])
