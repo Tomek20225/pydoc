@@ -6,10 +6,10 @@ import pathlib
 import pytest
 
 base_path = pathlib.Path(__file__).parent.resolve() / "test_data"
-CODE_FILE_PATH = (base_path / "example.py").as_posix()
+CODE_FILE_PATH = (base_path / "parser_test_data.py").as_posix()
 
 
-def run_parser_test(parser: Parser, expected_node: AstNode):
+def run_parser_test(parser: Parser, expected_node: AstNode) -> None:
     assert expected_node in parser.ast, parser.ast
 
 
@@ -20,7 +20,7 @@ def parser_of_code_file() -> Parser:
 
 
 class TestDef:
-    def test_identifies_def_without_arguments(self, parser_of_code_file: Parser):
+    def test_identifies_def_without_arguments(self, parser_of_code_file: Parser) -> None:
         run_parser_test(
             parser=parser_of_code_file,
             expected_node=AstNode(type=AstNodeType.DEF, tokens=[
@@ -35,7 +35,7 @@ class TestDef:
 
 class TestClass:
     @pytest.mark.parametrize("class_name", ("SuperException", "Foo"))
-    def test_identifies_class_without_arguments(self, parser_of_code_file: Parser, class_name: str):
+    def test_identifies_class_without_arguments(self, parser_of_code_file: Parser, class_name: str) -> None:
         run_parser_test(
             parser=parser_of_code_file,
             expected_node=AstNode(type=AstNodeType.CLASS, tokens=[
@@ -45,7 +45,7 @@ class TestClass:
             ])
         )
 
-    def test_identifies_class_with_one_argument(self, parser_of_code_file: Parser):
+    def test_identifies_class_with_one_argument(self, parser_of_code_file: Parser) -> None:
         run_parser_test(
             parser=parser_of_code_file,
             expected_node=AstNode(type=AstNodeType.CLASS, tokens=[
@@ -58,7 +58,7 @@ class TestClass:
             ])
         )
 
-    def test_identifies_class_with_multiple_arguments(self, parser_of_code_file: Parser):
+    def test_identifies_class_with_multiple_arguments(self, parser_of_code_file: Parser) -> None:
         run_parser_test(
             parser=parser_of_code_file,
             expected_node=AstNode(type=AstNodeType.CLASS, tokens=[
@@ -76,7 +76,7 @@ class TestClass:
         )
 
 class TestImport:
-    def test_identifies_import_statement(self, parser_of_code_file: Parser):
+    def test_identifies_import_statement(self, parser_of_code_file: Parser) -> None:
         run_parser_test(
             parser=parser_of_code_file,
             expected_node=AstNode(type=AstNodeType.IMPORT, tokens=[
@@ -85,7 +85,7 @@ class TestImport:
             ])
         )
 
-    def test_identifies_import_from_statement_with_one_submodule(self, parser_of_code_file: Parser):
+    def test_identifies_import_from_statement_with_one_submodule(self, parser_of_code_file: Parser) -> None:
         run_parser_test(
             parser=parser_of_code_file,
             expected_node=AstNode(type=AstNodeType.IMPORT, tokens=[
